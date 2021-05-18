@@ -10,13 +10,16 @@ import time
 import pandas as pd
 from pathlib import Path
 
-import utils.gen_utils as utils
-
+#import utils.gen_utils as utils
+import sys
+sys.path.insert(0,'/Users/johnfields/Documents/GitHub/personality-prediction/utils')
+import gen_utils as utils
 
 
 def get_inputs(inp_dir, dataset, embed, embed_mode, mode, layer):
     """ Read data from pkl file and prepare for training. """
-    file = open(inp_dir + dataset + '-' + embed + '-' + embed_mode + '-' + mode + '.pkl', 'rb')
+    #file = open(inp_dir + dataset + '-' + embed + '-' + embed_mode + '-' + mode + '.pkl', 'rb')
+    file = open('/Users/johnfields/Documents/GitHub/personality-prediction/pkl_data/essays-bert-base-cls-512_head.pkl','rb')
     data = pickle.load(file)
     author_ids, data_x, data_y = list(zip(*data))
     file.close()
@@ -134,5 +137,3 @@ if __name__ == "__main__":
     inputs, full_targets = get_inputs(inp_dir, dataset, embed, embed_mode, mode, layer)
     df = training(dataset, inputs, full_targets)
     logging(df, log_expdata)
-
-

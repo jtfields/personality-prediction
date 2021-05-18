@@ -6,3 +6,4 @@ numpy
 readability
 pandas
 tensorflow
+sklearn
