@@ -33,6 +33,23 @@ Next run the finetuning network which is currently a MLP.
 python finetuneNet.py
 ```
 
+
+Results Table             |  Language Models vs Psycholinguistic Traits
+:-------------------------:|:-------------------------:
+<img src="https://github.com/yashsmehta/personality-prediction/blob/master/imgs/results-table.png" width="800"/>  |  <img src="https://github.com/yashsmehta/personality-prediction/blob/master/imgs/lm-vs-psycholinguitic-results.png" width="200" />
+
+
+#### Predicting personality on unseen text
+Follow the steps below for predicting personality (e.g. the Big-Five: OCEAN traits) on a new text/essay:
+
+1. You will have to train your model -- for that, first choose your training dataset (e.g. essays).
+2. Extract features for each of the essays by passing it through a language model of your choice (e.g. BERT) by running the LM_extractor.py file. This will create a pickle file containing the training features.
+3. Next, train the finetuning model. Let's say it is a simple MLP (this was the best performing one, as can be seen from Table 2 of the paper). Use the extracted features from the LM to train this model. Here, you can experiment with 1) different models (e.g. SVMs, Attention+RNNs, etc.) and 2) concatenating the corresponding psycholinguistic features for each of the essays.
+4. You will have to write code to save the optimal model parameters after the training is complete.
+5. For the new data, first pass it through the SAME language model feature extraction pipeline and save this. Load your pre-trained model into memory and run it on these extracted features.
+
+Note: The text pre-processing (e.g. tokenization, etc.) before passing it through the language model should be the SAME for training and testing.
+
 ## Running Time
 
 ```bash
@@ -47,16 +64,20 @@ finetuneNet.py
 ```
 On a RTX2080 GPU, running for 15 epochs (with no cross-validation) takes from 5s-60s, depending on the MLP architecture.
 
-## Citation
+## Literature
 
-If you find this repo useful for your research, please cite it using the following BibTex entry:
+#### [Deep Learning based Personality Prediction [Literature REVIEW]](https://link.springer.com/article/10.1007/s10462-019-09770-z) (Springer AIR Journal - 2020)
 
 ```
-@inproceedings{mehtabottom,
-  title={Bottom-Up and Top-Down: Predicting Personality with Psycholinguistic and Language Model Features},
-  author={Mehta, Yash and Fatehi, Samin and Kazameini, Amirmohammad and Stachl, Clemens and Cambria, Erik and Eetemadi, Sauleh},
-  booktitle={Proceedings of the International Conference of Data Mining},
-  Organization = {IEEE},
-  year={2020}}
-}
+Mehta, Y., Majumder, N., Gelbukh, A. et al. Recent trends in deep learning based personality detection. Artif Intell Rev 53, 2313–2339 (2020). https://doi.org/10.1007/s10462-019-09770-z
 ```
+
+#### [Language Model Based Personality Prediction](https://ieeexplore.ieee.org/document/9338428) (ICDM - 2020)
+If you find this repo useful for your research, please cite it using the following:
+
+```
+Mehta, Yash, et al. "Bottom-up and top-down: Predicting personality with psycholinguistic and language model features." 2020 IEEE International Conference on Data Mining (ICDM). IEEE, 2020.
+```
+
+## License
+The source code for this project is licensed under the [MIT license](LICENSE.md).
